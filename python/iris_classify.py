@@ -1,5 +1,5 @@
 #!/usr/bin/python
 
-from sklearn.neighbors import KNeighborsClassifier
-
-knn_classifier = KNeighborsClassifier(n_neighbors=6)
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
