@@ -18,3 +18,7 @@ x_train = X[train_indexes]
 y_train = Y[train_indexes]
 y_test = Y[test_indexes]
 x_test = X[test_indexes]
+
+for i in range(X.shape[0]):
+    print(X[i][0], X[i][1], X[i][2], X[i][3])
+print(Y)
