@@ -1,40 +1,110 @@
 /* K-近邻算法 */
 #include <stdio.h>
 #include <math.h>
+#include <algorithm>
+#include <vector>
 #include <map>
 
 using namespace std;
 
-typedef struct point
+template <typename x_type, typename y_type>
+class KNN_classifier
 {
-    double x, y;
-} point;
+    private:
+        int _k;
+        vector<vector<x_type> > *_x_train;
+        vector<y_type> *_y_train;
+    
+    public:
+        KNN_classifier(int k)
+        {
+            _k = k;
+        }
+
+        void fit(vector<vector<x_type> > *x_train, vector<y_type> *y_train)
+        {
+            _x_train = x_train;
+            _y_train = y_train;
+        }
+
+        y_type predict(vector<x_type> *x_test)
+        {
+            int i, j, max_t;
+            y_type predict;
+            vector<int> index(_x_train->size());
+            vector<double> dist(_x_train->size());
+            map<y_type, int> mp;
+
+            for(i = 0; i < dist.size(); i++)
+            {
+                dist[i] = 0.0;
+                for(j = 0; j < x_test->size(); j++)
+                {
+                    dist[i] += pow(_x_train->at(i)[j] - x_test->at(j), 2);
+                }
+                index[i] = i;
+            }
+            sort(index.begin(), index.end(), [&dist](int a, int b)
+            {
+                return dist[a] < dist[b];
+            });
+            for(i = 0; i < _k; i++)
+            {
+                mp[ _y_train->at( index[i] ) ]++;
+            }
+
+            max_t = 0;
+            typename map<y_type, int>::iterator iter;
+            for(iter = mp.begin(); iter != mp.end(); iter++)
+            {
+                if(iter->second > max_t)
+                {
+                    max_t = iter->second;
+                    predict = iter->first;
+                }
+            }
+            return predict;
+        }
+
+        void predict(vector<vector<x_type> > *x_test, vector<y_type> *y_test)
+        {
+            int i = 0;
+            for(i = 0; i < (*x_test).size(); i++)
+            {
+                y_test->at(i) = predict( &( x_test->at(i) ) );
+            }
+        }
+};
 
 int main()
 {
-    int i, m = 4;
-    point inp;
-    point data[100] = {{1.0, 1.1}, {1.0, 1.0}, {0, 0}, {0, 0.1}};
-    char labs[100] = {'A', 'A', 'B', 'B'};
-    map<char, double> mp;
+    int i, j, n, m;
+    FILE *fp_iris;
+    KNN_classifier<double, int> knn(3);
 
-    scanf("%lf%lf", &inp.x, &inp.y);
+    fp_iris = fopen("./data/iris.txt", "r");
+    fscanf(fp_iris, "%d%d", &m, &n);
+    vector<vector<double> > x(m, vector<double> (n));
+    vector<int> y(m);
     for(i = 0; i < m; i++)
     {
-        double dist = pow(inp.x - data[i].x, 2) + pow(inp.y - data[i].y, 2);
-        mp[labs[i]] += dist;
-    }
-
-    char ans;
-    double mind = 1e9;
-    for(map<char, double>::iterator iter = mp.begin(); iter != mp.end(); iter++)
-    {
-        if(mind > iter->second)
+        for(j = 0; j < n; j++)
         {
-            mind = iter->second;
-            ans = iter->first;
+            fscanf(fp_iris, "%lf", &x[i][j]);
         }
+        fscanf(fp_iris, "%d", &y[i]);
     }
-    printf("%c\n", ans);
+    fclose(fp_iris);
+    knn.fit(&x, &y);
+
+    vector<double> x_test(n);
+    int predict;
+    for(i = 0; i < n; i++)
+    {
+        scanf("%lf", &x_test[i]);
+    }
+    predict = knn.predict(&x_test);
+    printf("%d\n", predict);
+
     return 0;
 }

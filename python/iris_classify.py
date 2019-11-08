@@ -20,5 +20,4 @@ y_test = Y[test_indexes]
 x_test = X[test_indexes]
 
 for i in range(X.shape[0]):
-    print(X[i][0], X[i][1], X[i][2], X[i][3])
-print(Y)
+    print(X[i][0], X[i][1], X[i][2], X[i][3], Y[i])

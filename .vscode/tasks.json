@@ -9,7 +9,6 @@
                 "${file}",
                 "-o",
                 "${workspaceFolder}/a.out",
-                "-larmadillo",
             ],
             "options": {
                 "cwd": "/usr/bin"
