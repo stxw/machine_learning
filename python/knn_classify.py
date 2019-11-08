@@ -8,7 +8,7 @@ def create_data_set():
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
-def classify(inx, data_set, labels, k):
+def knn_classify(inx, data_set, labels, k):
     data_set_size = data_set.shape[0]
     diffMat = numpy.tile(inx, (data_set_size, 1))
     diffMat -= data_set
@@ -21,7 +21,8 @@ def classify(inx, data_set, labels, k):
         voteIlabel = labels[sorted_dist_indicies[i]]
         class_count[voteIlabel] = class_count.get(voteIlabel, 0) + 1
     sorted_class_count = sorted(class_count.items(), key=operator.itemgetter(1), reverse=True)
-    print(sorted_class_count[0][0])
+    return sorted_class_count[0][0]
 
 group, labels = create_data_set()
-classify([0.1, 0], group, labels, 2)
+y_predict = knn_classify([0.1, 0], group, labels, 2)
+print(y_predict)
