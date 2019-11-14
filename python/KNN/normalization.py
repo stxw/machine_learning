@@ -33,7 +33,6 @@ X_train, X_test, Y_train, Y_test = train_test_split.split(X, Y)
 # 使用sklearn的StandardScaler
 # from sklearn.preprocessing import StandardScaler
 
-
 # 使用自己写的StandarScaler
 from standard_scaler import StandardScaler
 
