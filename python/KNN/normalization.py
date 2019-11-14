@@ -3,7 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets
-from sklearn.preprocessing import StandardScaler
 import train_test_split
 import knn_classify
 
@@ -31,23 +30,30 @@ X = iris.data
 Y = iris.target
 X_train, X_test, Y_train, Y_test = train_test_split.split(X, Y)
 
-# std_scaler = StandardScaler()
-# std_scaler.fit(X_train)
-# print(std_scaler.mean_)
-# print(std_scaler.scale_)
-# X_train = std_scaler.transform(X_train)
-# X_test = std_scaler.transform(X_test)
+# 使用sklearn的StandardScaler
+# from sklearn.preprocessing import StandardScaler
 
-X_train_mean = []
-X_train_std = []
-for i in range(X_train.shape[1]):
-    X_train_mean.append(np.mean(X_train[:, i]))
-    X_train_std.append(np.std(X_train[:, i]))
-print(X_train_mean)
-print(X_train_std)
-for i in range(X_train.shape[1]):
-    X_train[:, i] = (X_train[:, i] - X_train_mean[i]) / X_train_std[i]
-    X_test[:, i] = (X_test[:, i] - X_train_mean[i]) / X_train_std[i]
+
+# 使用自己写的StandarScaler
+from standard_scaler import StandardScaler
+
+std_scaler = StandardScaler()
+std_scaler.fit(X_train)
+print(std_scaler.mean_)
+print(std_scaler.scale_)
+X_train = std_scaler.transform(X_train)
+X_test = std_scaler.transform(X_test)
+
+# X_train_mean = []
+# X_train_std = []
+# for i in range(X_train.shape[1]):
+#     X_train_mean.append(np.mean(X_train[:, i]))
+#     X_train_std.append(np.std(X_train[:, i]))
+# print(X_train_mean)
+# print(X_train_std)
+# for i in range(X_train.shape[1]):
+#     X_train[:, i] = (X_train[:, i] - X_train_mean[i]) / X_train_std[i]
+#     X_test[:, i] = (X_test[:, i] - X_train_mean[i]) / X_train_std[i]
 
 classifier = knn_classify.KNN_classifier(3)
 classifier.fit(X_train, Y_train)
