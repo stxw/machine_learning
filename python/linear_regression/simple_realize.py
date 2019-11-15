@@ -26,18 +26,20 @@ import matplotlib.pyplot as plot
 # plot.plot(x, y_hat, color="r")
 # plot.show()
 
+X_train = np.random.random(size=1000) * 1000
+Y_train = X_train * 2.0 + 3.0 + np.random.normal(scale=200, size=1000)
+X_test = np.random.random(size=200) * 1000
+Y_test = X_test * 2.0 + 3.0 + np.random.normal(scale=200, size=200)
 
 import simple_linear_regression
-m = 100
-X_train = np.random.random(size=m)
-Y_train = X_train * 2.0 + 3.0 + np.random.normal(size=m)
 slr = simple_linear_regression.SimpleLinearRegression()
 slr.fit(X_train, Y_train)
 a = slr.a_
 b = slr.b_
-Y_hat = a * X_train + b
+Y_predict = slr.predict(X_test)
 
 print("a=", a, "b=", b)
-plot.scatter(X_train, Y_train)
-plot.plot(X_train, Y_hat, color="r")
+print(slr.score(Y_test, Y_predict))
+plot.scatter(X_test, Y_test)
+plot.plot(X_test, Y_predict, color="r")
 plot.show()

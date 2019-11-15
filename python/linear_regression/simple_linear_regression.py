@@ -21,9 +21,13 @@ class SimpleLinearRegression:
         self.b_ = Y_mean - self.a_ * X_mean
         return self
 
-    def predict(self, X_predict):
-        assert x_predict.ndim == 1, \
+    def predict(self, X_test):
+        assert X_test.ndim == 1, \
             "Simple Linear Regressor can only solve single feature training data."
         assert self.a_ is not None and self.b_ is not None, \
             "must fit before predict!"
-        Y_predict = np.array([self.a_ * x + self.b_ for x in X_predict])
+        Y_predict = np.array([self.a_ * x + self.b_ for x in X_test])
+        return Y_predict
+    
+    def score(self, Y_test, Y_predict):
+        return 1 - np.sum((Y_predict - Y_test) ** 2) / len(Y_test) / np.var(Y_test)
