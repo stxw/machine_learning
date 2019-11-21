@@ -14,15 +14,15 @@ X_train, X_test, Y_train, Y_test = train_test_split.split(X, Y)
 knn_clf = KNeighborsClassifier()
 
 param_grid = [
-    {
-        "weights" : ["uniform"],
-        "n_neighbors" : [i for i in range(1, 11)]
-    },
-    {
-        "weights" : ["distance"],
-        "n_neighbors" : [i for i in range(1, 11)],
-        "p" : [i for i in range(1, 6)]
-    }
+	{
+		"weights" : ["uniform"],
+		"n_neighbors" : [i for i in range(1, 11)]
+	},
+	{
+		"weights" : ["distance"],
+		"n_neighbors" : [i for i in range(1, 11)],
+		"p" : [i for i in range(1, 6)]
+	}
 ]
 
 start_t = time.perf_counter()

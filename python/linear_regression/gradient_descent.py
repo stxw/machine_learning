@@ -12,9 +12,9 @@ plot.scatter(X, Y)
 plot.show()
 
 def cost(theta, X_b, Y):
-    return np.sum((Y - X_b.dot(theta)) ** 2) / len(X_b)
+	return np.sum((Y - X_b.dot(theta)) ** 2) / len(X_b)
 
 def dcost(theta, X_b, Y):
-    return X_b.T.dot(X_b.dot(theta) - y) * 2.0 / len(X_b)
+	return X_b.T.dot(X_b.dot(theta) - y) * 2.0 / len(X_b)
 
 def 
