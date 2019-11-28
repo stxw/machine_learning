@@ -14,7 +14,7 @@ Ys  = np.array([[0, 0, 0, 1],	# the answer of and operation
 size = [2, 5, 8, 8, 4]
 # the size of neural network
 # the number "2" means there are two input variables
-# the number "5, 6" means there are two hidden neurons
+# the number "5, 8, 8" means the number of there hidden layer neurons
 # the number "4" means there is one output of this neural network
 
 weight = [np.random.randn(next_size, previous_size) for previous_size, next_size in zip(size[:-1], size[1:])]
@@ -72,3 +72,5 @@ if __name__ == "__main__":
 		back_pass(Ys, Y, out, eta=1.5)
 	Y_predict = predict(Xs)
 	print(Y_predict)
+	loss = np.sum((Y_predict - Ys) ** 2) / Ys.shape[1]
+	print(loss)
