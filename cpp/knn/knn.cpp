@@ -82,7 +82,7 @@ int main()
 	FILE *fp_iris;
 	KNN_classifier<double, int> knn(3);
 
-	fp_iris = fopen("./data/iris.txt", "r");
+	fp_iris = fopen("./knn/iris.txt", "r");
 	fscanf(fp_iris, "%d%d", &m, &n);
 	vector<vector<double> > x(m, vector<double> (n));
 	vector<int> y(m);

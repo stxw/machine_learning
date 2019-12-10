@@ -8,7 +8,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/a.out"
+                "${workspaceFolder}/a.out"
             ],
             "options": {
                 "cwd": "/usr/bin"
