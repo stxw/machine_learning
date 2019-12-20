@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from mxnet import autograd, nd
 
 x = nd.arange(4).reshape((4, 1))
