@@ -5,7 +5,6 @@ from mxnet import autograd, nd
 x = nd.arange(4).reshape((4, 1))
 print(x)
 
-
 # 自动求梯度
 x.attach_grad()
 with autograd.record():
