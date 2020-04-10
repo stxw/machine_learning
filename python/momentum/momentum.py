@@ -4,19 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plot
 
 def get_data():
-	init_a = 2.2
-	init_b = 4.5
+	init_a = 1.0
+	init_b = 0.5
 	n_size = 1000
-	x_train = np.random.random(size=n_size) * 20
-	y_train = x_train * init_a + init_b + np.random.normal(scale=1, size=n_size)
-	x_test = np.random.random(size=n_size) * 20
-	y_test = x_test * init_a + init_b + np.random.normal(scale=1, size=n_size)
-	return x_train, y_train, x_test, y_test
+	x_train = np.random.random(size=n_size) * 5
+	y_train = x_train * init_a + init_b + np.random.normal(scale=0.2, size=n_size)
+	return x_train, y_train
 
 def cal_loss(y_predict, y_true):
 	return np.sum(np.power(y_predict - y_true, 2)) / 2.0 / len(y_true)
 
-def gradient_descent(x_train, y_train, eta=0.005, iter=100, batch_size=20, momentum=0.0):
+def gradient_descent(x_train, y_train, eta=0.005, iter=200, batch_size=1000, momentum=0.0):
 	a = 0.0
 	b = 0.0
 	va = 0.0
@@ -46,14 +44,29 @@ def gradient_descent(x_train, y_train, eta=0.005, iter=100, batch_size=20, momen
 		b = b + vb
 		al.append(a)
 		bl.append(b)
-	return a, b, al, bl
+	return a, b, np.array(al), np.array(bl)
 
 if __name__ == "__main__":
-	x_train, y_train, x_test, y_test = get_data()
-	a, b, al, bl = gradient_descent(x_train, y_train, momentum=0.9)
-	print(a, b)
-	# plot.scatter(x_train, y_train)
-	# plot.plot(np.linspace(0, 20, 10), a * np.linspace(0, 20, 10) + b, '-r')
-	# plot.show()
-	plot.scatter(np.linspace(1, 100, 100), al, '-r')
+	x_train, y_train = get_data()
+	style = ['pink', '-b', '-g', '-y']
+
+	plot.figure("a")
+	for i in range(4):
+		plot.ylim(0, 1.7)
+		mom = float(i) / 10.0 * 3
+		a, b, al, bl = gradient_descent(x_train, y_train, eta=0.005, iter=100, momentum=mom)
+		print("%.1f" % (mom), ":", a, b)
+		plot.plot(np.linspace(0, len(al), len(al)), al, style[i], label = "%.1f" % (mom))
+	plot.plot(np.linspace(0, len(al), 2), np.array([1, 1]), '-r', label = "dst")
+	plot.legend()
+	
+	plot.figure("b")
+	for i in range(4):
+		plot.ylim(0, 0.6)
+		mom = float(i) / 10.0 * 3
+		a, b, al, bl = gradient_descent(x_train, y_train, eta=0.005, iter=200, momentum=mom)
+		print("%.1f" % (mom), ":", a, b)
+		plot.plot(np.linspace(0, len(bl), len(bl)), bl, style[i], label = "%.1f" % (mom))
+	plot.plot(np.linspace(0, len(al), 2), np.array([0.5, 0.5]), '-r', label = "dst")
+	plot.legend()
 	plot.show()
