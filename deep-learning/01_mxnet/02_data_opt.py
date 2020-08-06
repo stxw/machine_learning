@@ -55,11 +55,13 @@ print(x)
 x[1:2, :] = 12
 print(x)
 
+print()
+
 
 #运算的内存开销
 before = id(y)
 y = y + x
-print("\n", id(y) == before)
+print(id(y) == before)
 
 z = y.zeros_like()
 before = id(z)
