@@ -29,3 +29,19 @@ def show_fashion_mnist(images, labels):
 		f.axes.get_yaxis().set_visible(False)
 x, y = mnist_test[0:9]
 show_fashion_mnist(x, get_fashion_mnist_labels(y))
+
+batch_size = 256
+transformer = g_data.vision.transforms.ToTensor()
+if sys.platform.startswith('win'):
+	num_workers = 0
+else:
+	num_workers = 4
+train_iter = g_data.DataLoader(mnist_train.transform_first(transformer), \
+	batch_size=batch_size, shuffle=True, num_workers=num_workers)
+test_iter = g_data.DataLoader(mnist_test.transform_first(transformer), \
+	batch_size=batch_size, shuffle=False, num_workers=num_workers)
+
+start_time = time.time()
+for x, y in train_iter:
+	continue
+print("%.2f sec" % (time.time() - start_time))
