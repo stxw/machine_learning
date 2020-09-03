@@ -6,11 +6,6 @@ from mxnet.gluon import nn
 from mxnet.gluon import loss as g_loss
 from mxnet.gluon import data as g_data
 
-def xyplot(x, y, line_label='x'):
-	plt.plot(x, y)
-	plt.xlabel(x_label)
-	plt.ylabel(y_label)
-
 def train(train_features, test_features, train_labels, test_labels, loss, num_epochs, lr):
 	net = nn.Sequential()
 	net.add(nn.Dense(1))
